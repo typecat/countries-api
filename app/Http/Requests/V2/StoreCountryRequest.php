@@ -23,6 +23,7 @@ class StoreCountryRequest extends FormRequest
      */
     public function rules(): array
     {
+        // TODO: consider adding validation for uid (Rule)
         return[
             'uid' => ['required'],
             'name_ru' => ['required'],
