@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V2;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCountryRequest;
 use App\Http\Requests\V2\StoreCountryRequest;
+use App\Http\Resources\CountryResource;
 use App\Models\Country;
 
 class CountryController extends Controller
@@ -15,7 +16,7 @@ class CountryController extends Controller
     public function index()
     {
         return response()->json([
-            'result' => Country::all(),
+            'result' => CountryResource::collection(Country::all()),
             'error' => null
         ]);
     }
@@ -35,13 +36,11 @@ class CountryController extends Controller
      */
     public function store(StoreCountryRequest $request)
     {
-
-        var_dump($request->all());
         $country = Country::create($request->all());
 
         return response()->json([
-            'message' => "Country saved successfully!",
-            'country' => $country
+            'result' => new CountryResource($country),
+            'error' => null
         ], 201);
     }
 
